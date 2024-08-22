@@ -1,0 +1,55 @@
+/*
+1. numele tarilor participante 
+2. top 5 tari cu populatia cea mai numeroasa
+3. tarile care inca exista si incep cu litera A 
+4. suma tuturor populatiilor
+5. top 5 tari cu cea mai devreme aparitie
+6. un array de obiecte de forma 
+[
+	{
+		nation: 'Afghanistan',
+		code: 'AFG, 
+	}, 
+	{
+		nation: 'Anglola',
+		code 'ANG'
+	}
+]
+
+7. tara cu cele mai multe aparitii
+8. tarile cu sportul "MostSuccessfull" -> "Athletics"
+8. tara cea mai mica cu cel putin o medalie castigata 
+9. un obiect de forma
+{
+	Afghanistan: 35530081,
+	Albania: 2930187,
+	Algeria: 41318142,
+	...etc
+}
+
+10. un obiect de forma: 
+
+{
+	'A': ['Afghanistan', 'Albania', 'Algeria', 'American Samoa', ...],
+	'B': ['Bahamas', 'Bahrain', 'Banglahdesh', ...]
+	'C': ['Cambodia', 'Cameroon', 'Canada', 'Cape Verde']
+	etc
+}
+
+11. Sa se extraga o tara random din array si populatia acesteia 
+ex: 
+{
+	nation: 'Nicaragua',
+	population: 6217581
+}
+
+
+12. Tarile cu populatia peste 1 milion de locuitori care au castigat mai multe medalii iarna decat vara 
+
+13. Tarile cu populatia sub 5 milioane care au castigat un numar de medalii mai mare decat 50% din numarul mediu de medalii / tara 
+
+
+14. Tara cu cea mai recenta prima aparitie
+
+15. Tarile cu cea mai veche prima apartie care exista si in zilele noastre
+*/
