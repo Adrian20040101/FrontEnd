@@ -1,0 +1,102 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    background-image: url('assets/floor_bg_1.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.navbar {
+    margin-right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 135px;
+    max-width: 170px;
+    padding: 10px;
+    opacity: 0.7;
+    background-color: rgba(0, 0, 0, 1);
+    height: 100vh;
+}
+
+.logout-button {
+    width: 20px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    width: 50%;
+    flex-grow: 1;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.button-container button {
+    flex: 1;
+    background-color: rgba(0, 0, 0, 1);
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.button-container button:hover {
+    background-color: #919090;
+}
+
+.access-card {
+    margin: 60px 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottom-button {
+    text-align: center;
+    height: 45px;
+    width: 60px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 1);
+    border: 1px solid white;
+    cursor: pointer;
+    color: white;
+    font-size: x-small;
+    margin-bottom: 35px;
+    flex-shrink: 0;
+}
+
+.ntt-logo-container {
+    position: absolute;
+    top: 30px;
+    left: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.back-button {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    width: 140px;
+    border: 1px solid white;
+    border-radius: 4px;
+    color: white;
+    background-color: transparent;
+}

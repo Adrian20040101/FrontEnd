@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="navbar">
+        <img class="logout-button" src="assets/logout.svg" alt="logout">
+        <div class="button-container">
+            <button onclick="buttonPressed()">10</button>
+            <button onclick="buttonPressed()">9</button>
+            <button onclick="buttonPressed()">8</button>
+            <button onclick="buttonPressed()">7</button>
+            <button onclick="buttonPressed()">6</button>
+            <button onclick="buttonPressed()">5</button>
+            <button onclick="buttonPressed()">4</button>
+            <button onclick="buttonPressed()">3</button>
+            <button onclick="buttonPressed()">2</button>
+            <button onclick="buttonPressed()">1</button>
+            <button onclick="buttonPressed()">0</button>
+        </div>
+        <div class="access-card">
+            <img src="assets/meniu_button_acces_card.svg" alt="meniu_button_acces_card">
+        </div>
+        <button class="bottom-button">Wir ❤︎ NTTDATA</button>
+    </div>
+    <div class="ntt-logo-container">
+        <img src="assets/ntt-logo-cxp.svg" alt="ntt-logo">
+        <button class="back-button">← Zurück</button>
+    </div>
+    <script>
+        const buttonPressed = () => {
+            alert('Button was pressed.')
+        }
+    </script>
+</body>
+</html>
