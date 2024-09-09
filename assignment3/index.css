@@ -1,0 +1,40 @@
+body{
+    background-color: #f3efef;
+}
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+#author-text{
+    margin-bottom: 10px;
+}
+
+#authors {
+    border-radius: 4px;
+    height: 30px;
+    width: 200px;
+}
+
+#images-grid{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    background-color: white;
+    padding: 20px;
+    gap: 10px;
+}
+
+.element{
+    border: 1px solid gray;
+    border-radius: 6px;
+    padding: 10px;
+    max-width: 250px;
+}
+
+.element img{
+    width: 150px;
+}
