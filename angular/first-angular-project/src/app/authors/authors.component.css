@@ -1,0 +1,15 @@
+.authors-text {
+    margin-bottom: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: medium;
+}
+
+.authors-form select {
+    border-radius: 4px;
+    height: 30px;
+    width: 200px;
+}
+
+.fallback-text {
+    text-align: center;
+}

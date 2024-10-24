@@ -1,0 +1,13 @@
+<div class="authors-text">
+    Author
+</div>
+<form class="authors-form">
+    <select (change)="onAuthorChange($event)">
+        @for (author of uniqueAuthors; track author) {
+            <option [value]="author">
+                {{ author }}
+            </option>
+        }
+    </select>
+    
+</form>
