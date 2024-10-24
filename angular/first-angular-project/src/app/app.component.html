@@ -1,4 +1,9 @@
 <main>
   <app-authors />
   <app-card />
+  <app-pagination
+        [totalPages]="totalPages()"
+        [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)"
+  />
 </main>

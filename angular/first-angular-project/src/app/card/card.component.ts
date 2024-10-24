@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { Card } from '../card.model';
-import { AuthorsService } from '../authors.service';
+import { GalleryService } from '../gallery.service';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [],
+  imports: [PaginationComponent],
   templateUrl: './card.component.html',
   styleUrl: './card.component.css'
 })
@@ -14,12 +15,12 @@ export class CardComponent implements OnInit {
   cards = signal<Card[] | undefined>(undefined);
   error = signal('');
   private destroyRef = inject(DestroyRef);
-  private authorsService = inject(AuthorsService);
-
-  filteredCards = this.authorsService.getFilteredCards();
+  private galleryService = inject(GalleryService);
+  filteredCards = this.galleryService.getFilteredCards();
+  
 
   ngOnInit() {
-    const subscription = this.authorsService.fetchAuthorsAndCards()
+    const subscription = this.galleryService.fetchAuthorsAndCards()
       .subscribe({
         next: (cards) => {
           this.cards.set(cards);

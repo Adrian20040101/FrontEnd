@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { map } from 'rxjs';
 import { Card } from '../card.model';
-import { AuthorsService } from '../authors.service';
+import { GalleryService } from '../gallery.service';
 
 @Component({
   selector: 'app-authors',
@@ -14,14 +14,18 @@ import { AuthorsService } from '../authors.service';
 export class AuthorsComponent implements OnInit {
   error = signal('');
   private destroyRef = inject(DestroyRef);
-  private authorsService = inject(AuthorsService);
+  private galleryService = inject(GalleryService);
 
   get uniqueAuthors() {
-    return this.authorsService.uniqueAuthors();
+    return this.galleryService.uniqueAuthors();
+  }
+
+  get selectedAuthor() {
+    return this.galleryService.selectedAuthor();
   }
   
   ngOnInit() {
-    const subscription = this.authorsService.fetchAuthorsAndCards()
+    const subscription = this.galleryService.fetchAuthorsAndCards()
       .subscribe({
         error: (error: Error) => {
           this.error.set(error.message);
@@ -35,7 +39,7 @@ export class AuthorsComponent implements OnInit {
 
   onAuthorChange(event: Event) {
     if (event.target instanceof HTMLSelectElement) {
-      this.authorsService.selectedAuthor.set(event.target.value);
+      this.galleryService.selectedAuthor.set(event.target.value);
     }
   }
 }

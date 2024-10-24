@@ -1,15 +1,16 @@
 <div class="layout">
     @for (card of filteredCards(); track card.id) {
         <div class="card">
-            <img [src]="card.download_url" [alt]="'Image from ' + card.author">
+            <img [src]="card.download_url" [alt]="'Image from ' + card.author" />
             
             <h2>
                 {{ card.author }}
             </h2>
 
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Quod voluptatibus aliquid autem labore ullam harum necessitatibus aspernatur quam eum tenetur. 
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Quod voluptatibus aliquid autem labore ullam harum necessitatibus aspernatur quam eum tenetur.
+            </p> 
         </div>
     }
-   
 </div>

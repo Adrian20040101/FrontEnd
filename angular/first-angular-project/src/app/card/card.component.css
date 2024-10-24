@@ -4,19 +4,24 @@
     flex-wrap: wrap;
     margin-top: 20px;
     background-color: white;
+    border-radius: 8px;;
     padding: 20px;
-    gap: 10px;
+    gap: 45px;
 }
 
 .card {
-    border: 1px solid gray;
     border-radius: 6px;
     padding: 10px;
-    max-width: 250px;
+    max-width: 300px;
 }
 
 .card img {
-    width: 150px;
+    width: 300px;
+    border-radius: 6px;
+}
+
+.card h2, p {
+    text-align: center;
 }
 
 .fallback-text {

@@ -6,11 +6,13 @@ import { map } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthorsService {
+export class GalleryService {
   private httpClient = inject(HttpClient);
   uniqueAuthors = signal<string[] | undefined>(undefined);
   selectedAuthor = signal<string | undefined>(undefined);
   cards = signal<Card[] | undefined>(undefined);
+  itemsPerPage = 4;
+  currentPage = signal<number>(1);
 
   constructor() { }
 
@@ -37,10 +39,27 @@ export class AuthorsService {
 
   getFilteredCards() {
     return computed(() => {
+      const startIndex = (this.currentPage() - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
       if (this.cards() && this.selectedAuthor()) {
-        return this.cards()?.filter(card => card.author === this.selectedAuthor());
+        return this.cards()?.filter(card => card.author === this.selectedAuthor()).slice(startIndex, endIndex);
       }
-      return this.cards();
+      return this.cards()?.slice(startIndex, endIndex);
     });
+  }
+
+  getTotalPages() {
+    return computed(() => {
+      if (!this.cards()) return 1;
+      const filteredCards = this.cards()?.filter(
+        (card) => card.author === this.selectedAuthor()
+      );
+      // makes sure that there is at least one image card
+      return Math.ceil(filteredCards!.length / this.itemsPerPage);
+    });
+  }
+
+  setCurrentPage(page: number) {
+    this.currentPage.set(page);
   }
 }
