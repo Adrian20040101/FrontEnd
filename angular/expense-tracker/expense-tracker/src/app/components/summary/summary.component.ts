@@ -1,5 +1,3 @@
-/* not used yet, trying modularization */
-
 import { Component, OnInit } from '@angular/core';
 import { ExpenseService } from '../expense/expense.service';
 import { Expense } from '../expense/expense.model';
