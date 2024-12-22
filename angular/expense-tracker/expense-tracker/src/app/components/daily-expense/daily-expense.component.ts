@@ -1,3 +1,5 @@
+/* not used yet, trying modularization */
+
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Expense, Category } from '../expense/expense.model';
