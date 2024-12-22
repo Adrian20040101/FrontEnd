@@ -1,6 +1,24 @@
+.container {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1); 
+    border: 2px solid black; 
+    border-radius: 10px;
+    padding: 20px;
+    height: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+}
+
 .summary-container {
     padding: 20px;
     border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
 
 .no-expenses {
@@ -11,6 +29,42 @@
 
 .ag-theme-alpine {
     margin-top: 20px;
-    border: 1px solid #ccc;
     border-radius: 8px;
+}
+
+.summary-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 60%;
+}
+
+.export-button {
+    align-self: flex-end;
+    padding: 10px 20px;
+    width: 100%;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.export-button:hover {
+    background-color: #116123;
+}
+
+.export-button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.65;
 }

@@ -1,51 +1,59 @@
-@if (expenses.length > 0) {
-  <ul class="expense-list">
-      @for (expense of expenses; let i = $index; track i){
-          <li class="expense-item">
-              <div class="expense-details">
-                  <span class="expense-category">{{ expense.category }}</span>
-                  <span class="expense-amount"> ${{ expense.amount.toFixed(2) }}</span>
-              </div>
-              <div class="expense-actions">
-                  <button (click)="editExpense(i)" class="icon-button edit-button" aria-label="Edit Expense">
-                      <span class="icon">✎</span>
-                  </button>
-                  <button (click)="deleteExpense(i)" class="icon-button delete-button" aria-label="Delete Expense">
-                      <span class="icon">🗑</span>
-                  </button>
-              </div>                 
-          </li>
-      }
-  </ul>
-}
-
-@if(showForm) {
-  <form [formGroup]="expenseForm" (ngSubmit)="addExpense()" class="expense-form">
-    <select name="category" formControlName="category">
-        @for (cat of (categories | keyvalue); let i = $index; track i) {
-            <option [value]="cat.value">{{ cat.value }}</option>
-        }
-    </select>
-    @if (expenseForm.controls.category.invalid && (expenseForm.controls.category.dirty || expenseForm.controls.category.touched)) {
-        <p class="error-message">Select a category</p>
-    }
-
-    <input
-      type="number"
-      formControlName="amount"
-      placeholder="Enter amount"
-    />
-    @if (expenseForm.controls.amount.invalid && (expenseForm.controls.amount.dirty || expenseForm.controls.amount.touched)) {
-        <p class="error-message">Please enter a valid amount</p>
-    }
-
-    <div class="buttons-container">
-      <button type="submit" [disabled]="!expenseForm.valid">{{ editingIndex !== null ? 'Update Expense' : 'Add Expense' }}</button>
-      <button (click)="cancelAddExpense()">Cancel</button>
-    </div>
-  </form>
-} @else {
-  <div class="add-expense-container">
-    <button class="add-expense-button" (click)="showForm = true">Add Expense</button>
+<div class="expense-container">
+  @if (expenses.length > 0) {
+    <div class="expense-list-container">
+      <ul class="expense-list">
+          @for (expense of expenses; let i = $index; track i){
+              <li class="expense-item">
+                  <div class="expense-details">
+                      <span class="expense-category">{{ expense.category }}</span>
+                      <span class="expense-amount"> ${{ expense.amount.toFixed(2) }}</span>
+                  </div>
+                  <div class="expense-actions">
+                      <button (click)="editExpense(i)" class="icon-button edit-button" aria-label="Edit Expense">
+                          <span class="icon">✎</span>
+                      </button>
+                      <button (click)="deleteExpense(i)" class="icon-button delete-button" aria-label="Delete Expense">
+                          <span class="icon">🗑</span>
+                      </button>
+                  </div>                 
+              </li>
+          }
+      </ul>
   </div>
-}
+  } @else {
+    <p class="noExpenses">Add your first expense for {{ selectedDay }}</p>
+  }
+
+  @if(showForm) {
+    <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="expense-form">
+      <select name="category" formControlName="category">
+          @for (cat of (categories | keyvalue); let i = $index; track i) {
+              <option [value]="cat.value">{{ cat.value }}</option>
+          }
+      </select>
+      @if (expenseForm.controls.category.invalid && (expenseForm.controls.category.dirty || expenseForm.controls.category.touched)) {
+          <p class="error-message">Select a category</p>
+      }
+
+      <input
+        type="number"
+        formControlName="amount"
+        placeholder="Enter amount"
+      />
+      @if (expenseForm.controls.amount.invalid && (expenseForm.controls.amount.dirty || expenseForm.controls.amount.touched)) {
+          <p class="error-message">Please enter a valid amount</p>
+      }
+
+      <div class="buttons-container">
+        <button type="submit" [disabled]="!expenseForm.valid">
+          {{ editingIndex !== null ? 'Update Expense' : 'Add Expense' }}
+        </button>
+        <button type="button" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  } @else {
+    <div class="add-expense-container">
+      <button class="add-expense-button" (click)="showForm = true">Add Expense</button>
+    </div>
+  }
+</div>

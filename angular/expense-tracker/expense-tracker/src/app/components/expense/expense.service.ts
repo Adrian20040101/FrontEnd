@@ -16,6 +16,10 @@ export class ExpenseService {
     return savedExpenses ? JSON.parse(savedExpenses) : {};
   }
 
+  getDays(): string[] | null {
+    return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  }
+
   getAllExpensesAsObject(): { [day: string]: Expense[] } {
     const savedExpenses = localStorage.getItem(this.expensesKey);
     try {
@@ -38,13 +42,6 @@ export class ExpenseService {
       console.error('Error parsing expenses from localStorage:', error);
       return {}; 
     }
-  }
-  
-
-  getDaysWithExpenses(): string[] {
-    const allExpenses = this.getAllExpensesAsObject();
-    const daysWithExpenses = Object.keys(allExpenses).filter(day => allExpenses[day].length > 0);
-    return daysWithExpenses;
   }
 
   saveAllExpenses(expenses: { [day: string]: Expense[] }): void {
@@ -97,9 +94,5 @@ export class ExpenseService {
   getBudget(): number | null {
     const budget = localStorage.getItem(this.budgetKey);
     return budget ? JSON.parse(budget) : null;
-  }
-
-  getDays(): string[] | null {
-    return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   }
 }

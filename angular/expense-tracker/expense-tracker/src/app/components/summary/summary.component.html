@@ -1,20 +1,28 @@
-<div class="summary-container">
-    <h2>Weekly Expenses Summary</h2>
-  
-    <div *ngIf="rowData.length === 0" class="no-expenses">
-      <p>There are no expenses tracked yet.</p>
+<div class="container">
+  <div class="summary-container">   
+    <div class="grid-container">
+      <ag-grid-angular
+        style="width: 100%; height: 340px;"
+        class="ag-theme-alpine"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        [rowSelection]="'single'"
+      >
+      </ag-grid-angular>
+      
+      <button 
+        class="export-button" 
+        (click)="exportToExcel()" 
+        [disabled]="!rowData.length"
+        aria-label="Export Expenses to Excel">
+        Export to Excel
+      </button>
     </div>
-  
-    <ag-grid-angular
-      *ngIf="rowData.length > 0"
-      style="width: 100%; height: 400px;"
-      class="ag-theme-alpine"
-      [rowData]="rowData"
-      [columnDefs]="columnDefs"
-      [defaultColDef]="defaultColDef"
-      [pagination]="true"
-      [paginationPageSize]="10"
-    >
-    </ag-grid-angular>
+
+    <ag-charts
+      style="width: 40%; height: 390px;"
+      [options]="chartOptions">
+    </ag-charts>
   </div>
-  
+</div>

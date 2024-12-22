@@ -1,106 +1,68 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { Expense, Category } from '../expense/expense.model';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { ExpenseService } from '../expense/expense.service';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Expense, Category } from '../expense/expense.model';
 import { CommonModule } from '@angular/common';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-day',
   templateUrl: './daily-expense.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   styleUrls: ['./daily-expense.component.css']
 })
-export class DayComponent implements OnInit, OnDestroy {
-  day: string = 'Monday';
+export class DailyExpenseComponent implements OnInit {
+  @Input() selectedDay: string = 'Monday';
+  @Output() dailyTotalUpdated = new EventEmitter<number>();
+  @Output() addExpenseEvent = new EventEmitter<Expense>();
+  @Output() editExpenseEvent = new EventEmitter<{ index: number, expense: Expense }>();
+  @Output() deleteExpenseEvent = new EventEmitter<number>();
+
   expenses: Expense[] = [];
-  budget: number | null = null;
-  remainingBudget: number | null = null;
-
-  editingIndex: number | null = null;
-  showForm: boolean = false;
-  days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
   categories = Category;
+  showForm: boolean = false;
+  editingIndex: number | null = null;
+  totalExpenses: number = 0;
 
   expenseForm = new FormGroup({
     category: new FormControl<Category | null>(null, [Validators.required]),
     amount: new FormControl<number | null>(null, [Validators.required, Validators.min(0.01)])
   });
 
-  private routeSubscription: Subscription | undefined;
-  private budgetSubscription: Subscription | undefined;
-  private expensesSubscription: Subscription | undefined;
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private expenseService: ExpenseService
-  ) {}
+  constructor(private expenseService: ExpenseService) {}
 
   ngOnInit(): void {
-    this.routeSubscription = this.route.paramMap.subscribe((params: ParamMap) => {
-      const dayParam = params.get('day');
-      if (dayParam) {
-        const dayCapitalized = this.capitalizeFirstLetter(dayParam);
-        if (this.expenseService.getDays()?.includes(dayCapitalized)) {
-          this.day = dayCapitalized;
-          this.loadExpenses();
-        } else {
-          this.router.navigate(['/expenses/monday']);
-        }
-      }
-    });
+    this.loadExpenses();
+  }
 
-    this.budget = this.expenseService.getBudget();
-    if (this.budget === null) {
-      this.router.navigate(['/budget']);
+  loadExpenses(): void {
+    this.expenses = this.expenseService.getExpensesByDay(this.selectedDay);
+    this.calculateTotalExpenses();
+  }
+
+  onSubmit(): void {
+    if (this.editingIndex !== null) {
+      this.updateExpense();
     } else {
-      this.calculateRemainingBudget();
+      this.addExpense();
     }
   }
 
-  ngOnDestroy(): void {
-    this.routeSubscription?.unsubscribe();
-    this.budgetSubscription?.unsubscribe();
-    this.expensesSubscription?.unsubscribe();
-  }
-
-  private capitalizeFirstLetter(word: string): string {
-    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-  }
-
-  private loadExpenses(): void {
-    this.expenses = this.expenseService.getExpensesByDay(this.day);
-    this.calculateRemainingBudget();
-  }
-
-  private calculateRemainingBudget(): void {
-    if (this.budget !== null) {
-      const totalExpenses = this.expenseService.getTotalExpensesAllDays();
-      this.remainingBudget = this.budget - totalExpenses;
-    } else {
-      this.remainingBudget = null;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedDay'] && !changes['selectedDay'].isFirstChange()) {
+      console.log(`DailyExpenseComponent: selectedDay changed to ${this.selectedDay}`);
+      this.loadExpenses();
     }
   }
 
   addExpense(): void {
-    if (this.expenseForm.valid && !this.isSummary()) {
+    if (this.expenseForm.valid) {
       const newExpense: Expense = {
-        category: this.category?.value as Category,
-        amount: Number(this.amount?.value),
-        day: this.day
+        category: this.expenseForm.value.category as Category,
+        amount: Number(this.expenseForm.value.amount),
+        day: this.selectedDay
       };
-
-      if (this.editingIndex !== null) {
-        this.expenseService.updateExpense(this.day, this.editingIndex, newExpense);
-        this.editingIndex = null;
-      } else {
-        this.expenseService.addExpense(this.day, newExpense);
-      }
-
+      this.addExpenseEvent.emit(newExpense);
       this.expenseForm.reset();
       this.showForm = false;
     }
@@ -116,41 +78,39 @@ export class DayComponent implements OnInit, OnDestroy {
     const expense = this.expenses[index];
     this.expenseForm.setValue({
       category: expense.category,
-      amount: expense.amount,
+      amount: expense.amount
     });
     this.showForm = true;
+  }
+
+  updateExpense(): void {
+    if (this.expenseForm.valid && this.editingIndex !== null) {
+      const updatedExpense: Expense = {
+        category: this.expenseForm.value.category as Category,
+        amount: Number(this.expenseForm.value.amount),
+        day: this.selectedDay
+      };
+      this.editExpenseEvent.emit({ index: this.editingIndex, expense: updatedExpense });
+      this.editingIndex = null;
+      this.expenseForm.reset();
+      this.showForm = false;
+    }
   }
 
   cancelEdit(): void {
     this.editingIndex = null;
     this.expenseForm.reset();
-    this.showForm = this.expenses.length === 0;
-  }
-
-  toggleForm(): void {
-    this.showForm = !this.showForm;
+    this.showForm = false;
   }
 
   deleteExpense(index: number): void {
     if (confirm('Are you sure you want to delete this expense?')) {
-      this.expenseService.deleteExpense(this.day, index);
-      this.loadExpenses();
+      this.deleteExpenseEvent.emit(index);
     }
   }
 
-  get category() {
-    return this.expenseForm.get('category');
-  }
-
-  get amount() {
-    return this.expenseForm.get('amount');
-  }
-
-  trackByIndex(index: number, item: any): number {
-    return index;
-  }
-
-  isSummary(): boolean {
-    return false;
+  calculateTotalExpenses(): void {
+    this.totalExpenses = this.expenseService.getTotalExpenses(this.selectedDay);
+    this.dailyTotalUpdated.emit(this.totalExpenses);
   }
 }

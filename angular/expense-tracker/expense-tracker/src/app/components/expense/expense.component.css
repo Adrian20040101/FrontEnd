@@ -46,12 +46,8 @@
 
 .expense-box {
     flex: 1;
-    background: rgba(255, 255, 255, 0.1); 
-    border: 2px solid black; 
     border-radius: 10px;
-    padding: 20px;
     height: 500px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -63,193 +59,6 @@
     text-align: center;
     margin-bottom: 30px;
     font-size: 2rem;
-}
-
-.initial-prompt {
-    text-align: center;
-    font-size: 1.2rem;
-}
-
-.expense-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    flex: 1;
-    overflow-y: auto;
-    border-bottom: 2px solid black;
-}
-
-.expense-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.3);
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 8px;
-}
-
-.expense-details {
-    display: flex;
-    gap: 20px;
-    font-size: 1.1rem;
-}
-
-.expense-category {
-    font-weight: bold;
-}
-
-.expense-amount {
-    font-weight: normal;
-}
-
-.expense-actions {
-    display: flex;
-    gap: 10px;
-}
-
-.icon-button {
-    background: none; 
-    border: none; 
-    cursor: pointer; 
-    padding: 5px;     
-    transition: transform 0.2s, color 0.2s; 
-    font-size: 1.8rem;
-}
-
-.icon-button:hover {
-    transform: scale(1.1);
-}
-
-.icon-button .icon {
-    font-size: 1.8rem;
-}
-
-.edit-button .icon {
-    color: #ffa500;
-}
-
-.edit-button:hover .icon {
-    color: #e69500;
-}
-
-.delete-button .icon {
-    color: red;
-}
-
-.delete-button:hover .icon {
-    color: darkred;
-}
-
-.icon-button:focus {
-    outline: none;
-}
-
-.expense-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.expense-form select,
-.expense-form input {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    outline: none;
-    transition: border 0.3s ease;
-    font-size: 1rem;
-    background-color: #ffffff33;
-    color: white;
-}
-
-.expense-form input::placeholder {
-    color: white;
-    opacity: 1;
-}
-
-.expense-form select::placeholder {
-    color: white;
-    opacity: 1;
-}
-
-.expense-form option {
-    color: black;
-    background-color: white;
-}
-
-.expense-form select:focus {
-    border: 2px solid #2575fc;
-}
-
-.expense-form input:focus {
-    border: 2px solid #2575fc;
-}
-
-.expense-form input.invalid {
-    border: 2px solid red;
-}
-
-.buttons-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    gap: 15px;
-    width: 100%;
-}
-
-.expense-form button {
-    padding: 10px;
-    background-color: #2575fc;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 1rem;
-    width: 50%
-}
-
-.cancel-button {
-    background-color: #808080;
-    color: white;
-}
-
-.cancel-button:hover {
-    background-color: #666666;
-}
-
-.expense-form button:disabled {
-    background-color: #888888;
-    cursor: not-allowed;
-}
-
-.add-expense-button-container {
-    display: flex;
-    justify-content: center;
-    padding: 10px 0;
-}
-
-.add-expense-button {
-    padding: 10px 20px;
-    width: 100%;
-    background-color: #2575fc;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 1rem;
-    align-self: center; 
-    margin-top: 10px;
-}
-
-.add-expense-button:hover {
-    background-color: #1d63d2;
-}
-
-.expense-form button:hover:enabled {
-    background-color: #1d63d2;
 }
 
 .tabs {
@@ -305,32 +114,6 @@
     text-align: left;
 }
 
-.summary-container {
-    padding: 20px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: row;
-    gap: 20px
-}
-
-.no-expenses {
-    text-align: center;
-    font-size: 1.2rem;
-    padding: 50px 0;
-}
-
-.ag-theme-alpine {
-    margin-top: 20px;
-    border-radius: 8px;
-}
-
-.summary-view {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-}
-
 .expenses-grid {
     margin-top: 20px;
 }
@@ -339,11 +122,4 @@
     margin-top: 20px;
     display: flex;
     gap: 10px;
-}
-
-.error-message {
-    color: red;
-    font-size: 0.9rem;
-    margin-top: 5px;
-    text-align: center;
 }
