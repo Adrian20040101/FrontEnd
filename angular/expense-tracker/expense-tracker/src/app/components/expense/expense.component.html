@@ -1,0 +1,148 @@
+<div class="main-content">
+  <div class="navigation-buttons">
+    @if (hasNextDay()) {
+      <button 
+      class="nav-button next-button" 
+      (click)="goToNextDay()"
+      aria-label="Go to Next Day"
+      title="Go to Next Day"
+      >
+        Next
+      </button>
+    }
+
+    @if (hasPreviousDay()) {
+      <button 
+      class="nav-button previous-button" 
+      (click)="goToPreviousDay()"
+      aria-label="Go to Previous Day"
+      title="Go to Previous Day"
+      >
+        Previous
+      </button>
+    }
+  </div>
+
+  @if (!isSummary) {
+    <h2>{{ selectedDay }}'s Expense List</h2>
+  } @else {
+    <h2>Expense List Summary</h2>
+  }
+
+  <div class="content-wrapper">
+    <div class="expense-box">
+      @if (!isSummary) {
+        @if (expenses.length === 0) {
+          <p>Add your first expense for {{ selectedDay }}</p>
+        }      
+        
+        @if (expenses.length > 0) {
+          <ul class="expense-list">
+              @for (expense of expenses; let i = $index; track i){
+                  <li class="expense-item">
+                      <div class="expense-details">
+                          <span class="expense-category">{{ expense.category }}</span>
+                          <span class="expense-amount"> ${{ expense.amount.toFixed(2) }}</span>
+                      </div>
+                      <div class="expense-actions">
+                          <button (click)="editExpense(i)" class="icon-button edit-button" aria-label="Edit Expense">
+                              <span class="icon">✎</span>
+                          </button>
+                          <button (click)="deleteExpense(i)" class="icon-button delete-button" aria-label="Delete Expense">
+                              <span class="icon">🗑</span>
+                          </button>
+                      </div>                 
+                  </li>
+              }
+          </ul>
+        }
+        
+        @if(showForm) {
+          <form [formGroup]="expenseForm" (ngSubmit)="addExpense()" class="expense-form">
+            <select name="category" formControlName="category">
+                @for (cat of (categories | keyvalue); let i = $index; track i) {
+                    <option [value]="cat.value">{{ cat.value }}</option>
+                }
+            </select>
+            @if (expenseForm.controls.category.invalid && (expenseForm.controls.category.dirty || expenseForm.controls.category.touched)) {
+                <p class="error-message">Select a category</p>
+            }
+        
+            <input
+              type="number"
+              formControlName="amount"
+              placeholder="Enter amount"
+            />
+            @if (expenseForm.controls.amount.invalid && (expenseForm.controls.amount.dirty || expenseForm.controls.amount.touched)) {
+                <p class="error-message">Please enter a valid amount</p>
+            }
+        
+            <div class="buttons-container">
+              <button type="submit" [disabled]="!expenseForm.valid">{{ editingIndex !== null ? 'Update Expense' : 'Add Expense' }}</button>
+              <button (click)="cancelAddExpense()">Cancel</button>
+            </div>
+          </form>
+        } @else {
+          <div class="add-expense-container">
+            <button class="add-expense-button" (click)="showForm = true">Add Expense</button>
+          </div>
+        }
+      } @else {
+        <div class="summary-container">        
+            <ag-grid-angular
+            style="width: 60%; height: 390px;"
+            class="ag-theme-alpine"
+            [rowData]="rowData"
+            [columnDefs]="columnDefs"
+            [defaultColDef]="defaultColDef"
+            [rowSelection]="'single'"
+          >
+          </ag-grid-angular>
+
+            <ag-charts
+              style="width: 40%; height: 390px;"
+              [options]="chartOptions">
+            </ag-charts>
+        </div>
+      }
+    </div>
+
+    <div class="tabs">
+      <ul class="tab-list">
+        @for(day of days; let i = $index; track i) {
+          <li 
+            class="tab-item" 
+            [class.active]="day === selectedDay" 
+            [routerLink]="['/expenses', day.toLowerCase()]"
+            routerLinkActive="active"
+          >
+            {{ day }}
+          </li>
+        }
+
+        <li 
+          class="tab-item" 
+          [class.active]="isSummaryTab()" 
+          [routerLink]="['/expenses', 'summary']" 
+          routerLinkActive="active"
+        >
+          Summary
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="budget-and-expenses-details-container">
+  <p class="budget-and-expenses-details">Weekly Budget: {{ budget !== null ? '$'+ budget.toFixed(2) : 'N/A' }}</p>
+  @if (isSummary) {
+    <p class="budget-and-expenses-details">Weekly Savings: {{ remainingBudget !== null ? '$'+ remainingBudget.toFixed(2) : 'N/A' }}</p>
+
+  } @else {
+    <p class="budget-and-expenses-details">Remaining  Budget: {{ remainingBudget !== null ? '$'+ remainingBudget.toFixed(2) : 'N/A' }}</p>
+  }
+  @if (!isSummary) {
+    <p class="budget-and-expenses-details">Total Expenses for {{ selectedDay }}: {{ totalExpenses > 0 ? '$' + totalExpenses.toFixed(2) : 'N/A' }}</p>
+  }
+  <p class="budget-and-expenses-details">Total Weekly Expenses: {{ totalWeeklyExpenses > 0 ? '$' + totalWeeklyExpenses.toFixed(2) : 'N/A' }}</p>
+</div>

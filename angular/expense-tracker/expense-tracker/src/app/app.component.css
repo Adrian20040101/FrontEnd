@@ -1,0 +1,13 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 97vh;
+    width: 100%;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    box-sizing: border-box;
+}

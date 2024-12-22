@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 97vh;
+    width: 100%;
+}
+
+.welcomeText {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.getStartedText {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    text-align: center;
+    max-width: 80%;
+    line-height: 1.5;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+}
+
+.input-container input {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input.invalid {
+    border-color: red;
+}
+
+.input-container input:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
+}
+
+.input-container button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #1475dd;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.input-container button:hover {
+    background-color: #1d63d2;
+}
+
+.input-container button:active {
+    transform: scale(0.95);
+}
+
+.input-container button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: red;
+    font-size: 1.2rem;
+    margin-top: 5px;
+  }
