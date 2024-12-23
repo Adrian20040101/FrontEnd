@@ -101,9 +101,23 @@
     border-top: 2px solid white;
 }
 
+.form-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group label {
+    text-align: right;
+    font-weight: bold;
+}
+
+
 .expense-form select,
 .expense-form input {
     padding: 10px;
+    width: 100%;
     border: none;
     border-radius: 5px;
     outline: none;

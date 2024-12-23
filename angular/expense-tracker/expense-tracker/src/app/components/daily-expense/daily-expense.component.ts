@@ -35,6 +35,15 @@ export class DailyExpenseComponent implements OnInit {
     this.loadExpenses();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedDay'] && !changes['selectedDay'].isFirstChange()) {
+      console.log(`DailyExpenseComponent: selectedDay changed to ${this.selectedDay}`);
+      this.loadExpenses();
+      this.expenseForm.reset();
+      this.showForm = false;
+    }
+  }
+
   loadExpenses(): void {
     this.expenses = this.expenseService.getExpensesByDay(this.selectedDay);
     this.calculateTotalExpenses();
@@ -45,13 +54,6 @@ export class DailyExpenseComponent implements OnInit {
       this.updateExpense();
     } else {
       this.addExpense();
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selectedDay'] && !changes['selectedDay'].isFirstChange()) {
-      console.log(`DailyExpenseComponent: selectedDay changed to ${this.selectedDay}`);
-      this.loadExpenses();
     }
   }
 

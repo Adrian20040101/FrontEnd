@@ -2,21 +2,34 @@
   <div class="navigation-buttons">
     @if (hasNextDay()) {
       <button 
-      class="nav-button next-button" 
-      (click)="goToNextDay()"
-      aria-label="Go to Next Day"
-      title="Go to Next Day"
+        class="nav-button next-button" 
+        (click)="goToNextDay()"
+        aria-label="Go to Next Day"
+        title="Go to Next Day"
       >
         Next
       </button>
     }
 
-    @if (hasPreviousDay()) {
+    @if (hasPreviousDay() && !isSummary) {
       <button 
-      class="nav-button previous-button" 
-      (click)="goToPreviousDay()"
-      aria-label="Go to Previous Day"
-      title="Go to Previous Day"
+        class="nav-button previous-button" 
+        (click)="goToPreviousDay()"
+        aria-label="Go to Previous Day"
+        title="Go to Previous Day"
+      >
+        Previous
+      </button>
+    }
+  </div>
+
+  <div class="summary-tab-nav-button">
+    @if (hasPreviousDay() && isSummary) {
+      <button
+        class="nav-button previous-button" 
+        (click)="goToPreviousDay()"
+        aria-label="Go to Previous Day"
+        title="Go to Previous Day"
       >
         Previous
       </button>

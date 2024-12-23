@@ -1,9 +1,7 @@
-/* not used yet, trying modularization */
-
 import { Component, OnInit } from '@angular/core';
 import { ExpenseService } from '../expense/expense.service';
 import { Expense } from '../expense/expense.model';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, GridOptions } from 'ag-grid-community';
 import { AgGridModule } from 'ag-grid-angular';
 import { CommonModule } from '@angular/common';
 import { AgChartsModule } from 'ag-charts-angular';
@@ -33,7 +31,7 @@ export class SummaryComponent implements OnInit {
     resizable: true,
     flex: 1
   };
-  rowData: any[] = [];
+  rowData: any[] = []; 
 
   constructor(private expenseService: ExpenseService) { }
 
@@ -86,17 +84,22 @@ export class SummaryComponent implements OnInit {
         Array.isArray(expenses) ? expenses.map(exp => ({ ...exp, day })) : []
       );
     
-    this.rowData = validExpenses.map(exp => ({
-      day: exp.day,
-      category: exp.category,
-      amount: exp.amount
-    }));
+      this.rowData = validExpenses.sort((a, b) => this.compareDays(a.day, b.day)).map(exp => ({
+        day: exp.day,
+        category: exp.category,
+        amount: exp.amount,
+      }));
 
     this.prepareChartData();
 
     this.initializeChart();
   }
 
+  private compareDays(a: string, b: string): number {
+    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    return daysOfWeek.indexOf(a) - daysOfWeek.indexOf(b);
+  }
+  
   private getTotalAmount(): number {
     return this.chartData.reduce((acc, curr) => acc + curr.amount, 0);
   }

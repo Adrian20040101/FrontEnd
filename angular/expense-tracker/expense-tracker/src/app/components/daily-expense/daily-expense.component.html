@@ -26,20 +26,27 @@
 
   @if(showForm) {
     <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="expense-form">
-      <select name="category" formControlName="category">
+      <div class="form-group">
+        <label>Category:</label>
+        <select name="category" formControlName="category" required>
           @for (cat of (categories | keyvalue); let i = $index; track i) {
               <option [value]="cat.value">{{ cat.value }}</option>
           }
-      </select>
+        </select>
+      </div>
       @if (expenseForm.controls.category.invalid && (expenseForm.controls.category.dirty || expenseForm.controls.category.touched)) {
           <p class="error-message">Select a category</p>
       }
 
-      <input
-        type="number"
-        formControlName="amount"
-        placeholder="Enter amount"
-      />
+      <div class="form-group">
+        <label>Amount:</label>
+        <input
+          type="number"
+          formControlName="amount"
+          required
+        />
+      </div>
+
       @if (expenseForm.controls.amount.invalid && (expenseForm.controls.amount.dirty || expenseForm.controls.amount.touched)) {
           <p class="error-message">Please enter a valid amount</p>
       }
